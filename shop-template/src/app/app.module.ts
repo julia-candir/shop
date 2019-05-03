@@ -22,6 +22,8 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
 import { ProductsComponent } from './products/products.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
+import { AuthService } from './auth.service';
+
 @NgModule({
   declarations: [
     AdminOrdersComponent,
@@ -83,7 +85,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
       { path: '**', component: NotFoundComponent },
     ]),
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
