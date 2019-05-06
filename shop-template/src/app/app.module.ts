@@ -22,7 +22,11 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
 import { ProductsComponent } from './products/products.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
-import { AuthService } from './auth.service';
+import { AuthService } from './shared/services/auth.service';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { UserService } from './shared/services/user.service';
+import { AdminAuthGuard } from './shared/guards/admin-guard.guard';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -59,33 +63,38 @@ import { AuthService } from './auth.service';
         component: ShoppingCartComponent,
       },
       {
-        path: 'my/orders',
-        component: MyOrdersComponent,
-      },
-      {
-        path: 'check-out',
-        component: CheckOutComponent,
-      },
-      {
-        path: 'order-success',
-        component: OrderSuccessComponent,
-      },
-      {
         path: 'login',
         component: LoginComponent,
       },
       {
+        path: 'my/orders',
+        component: MyOrdersComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'check-out',
+        component: CheckOutComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'order-success',
+        component: OrderSuccessComponent,
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'admin/admin-products',
         component: AdminProductsComponent,
+        canActivate: [AuthGuard, AdminAuthGuard],
       },
       {
         path: 'admin/admin-orders',
         component: AdminOrdersComponent,
+        canActivate: [AuthGuard, AdminAuthGuard],
       },
       { path: '**', component: NotFoundComponent },
     ]),
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard, UserService, AdminAuthGuard, AngularFirestore],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
