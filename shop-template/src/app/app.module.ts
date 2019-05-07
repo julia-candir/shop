@@ -26,7 +26,7 @@ import { AuthService } from './shared/services/auth.service';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { UserService } from './shared/services/user.service';
 import { AdminAuthGuard } from './shared/guards/admin-guard.guard';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule,
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     NgbModule.forRoot(),
     RouterModule.forRoot([
       {

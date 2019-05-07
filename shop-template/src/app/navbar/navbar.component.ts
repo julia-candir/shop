@@ -11,12 +11,7 @@ export class NavbarComponent {
   appUser: AppUser;
 
   constructor(private auth: AuthService) {
-    // auth.appUser$.subscribe(appUser => (this.appUser = appUser));authService.appUsers$.subscribe(user=>{
-    auth.appUser$.subscribe(user => {
-      console.log(user.isAdmin);
-      this.appUser = user; // appUser is unable to read the property
-      console.log(this.appUser.isAdmin);
-    });
+    auth.appUser$.subscribe(appUser => (this.appUser = appUser));
   }
 
   logout() {

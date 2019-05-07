@@ -7,5 +7,6 @@ export const environment = {
     projectId: 'shop-template-ec84a',
     storageBucket: 'shop-template-ec84a.appspot.com',
     messagingSenderId: '300444834963',
+    appId: '1:300444834963:web:5c4cb30d5421ec97',
   },
 };
