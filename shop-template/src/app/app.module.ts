@@ -27,6 +27,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { UserService } from './shared/services/user.service';
 import { AdminAuthGuard } from './shared/guards/admin-guard.guard';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestor
     OrderSuccessComponent,
     ProductsComponent,
     ShoppingCartComponent,
+    ProductFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,6 +87,11 @@ import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestor
       {
         path: 'admin/admin-products',
         component: AdminProductsComponent,
+        canActivate: [AuthGuard, AdminAuthGuard],
+      },
+      {
+        path: 'admin/products/new',
+        component: ProductFormComponent,
         canActivate: [AuthGuard, AdminAuthGuard],
       },
       {
