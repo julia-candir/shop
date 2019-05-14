@@ -1,3 +1,4 @@
+import { CategoryService } from './shared/services/category.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -28,6 +29,7 @@ import { UserService } from './shared/services/user.service';
 import { AdminAuthGuard } from './shared/guards/admin-guard.guard';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
     AngularFireDatabaseModule,
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    ReactiveFormsModule,
     NgbModule.forRoot(),
     RouterModule.forRoot([
       {
@@ -102,7 +105,7 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
       { path: '**', component: NotFoundComponent },
     ]),
   ],
-  providers: [AuthService, AuthGuard, UserService, AdminAuthGuard, AngularFirestore],
+  providers: [AuthService, AuthGuard, UserService, AdminAuthGuard, AngularFirestore, CategoryService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
