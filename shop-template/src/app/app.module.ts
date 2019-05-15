@@ -1,3 +1,4 @@
+import { ProductService } from './shared/services/product.service';
 import { CategoryService } from './shared/services/category.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -23,13 +24,13 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
 import { ProductsComponent } from './products/products.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
-import { AuthService } from './shared/services/auth.service';
-import { AuthGuard } from './shared/guards/auth.guard';
-import { UserService } from './shared/services/user.service';
 import { AdminAuthGuard } from './shared/guards/admin-guard.guard';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { AuthService } from './shared/services/auth.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserService } from './shared/services/user.service';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       { path: '**', component: NotFoundComponent },
     ]),
   ],
-  providers: [AuthService, AuthGuard, UserService, AdminAuthGuard, AngularFirestore, CategoryService],
+  providers: [AuthService, AuthGuard, UserService, AdminAuthGuard, AngularFirestore, CategoryService, ProductService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
