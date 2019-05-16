@@ -1,8 +1,14 @@
-<form [formGroup]="newProductForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="newProductForm" (ngSubmit)="save(newProductForm.value)">
   <div class="form-group">
     <label for="title">Title</label>
     <input id="title" name="title" type="text" required class="form-control" formControlName="title" />
-    <div *ngIf="title.invalid && title.touched">
+    <div
+      class="alert alert-danger mt-3"
+      role="alert"
+      *ngIf="title.invalid && title.touched"
+      class="alert alert-danger"
+      role="alert"
+    >
       Title is required and it's length must be greater than 2 letters.
     </div>
   </div>
@@ -15,7 +21,13 @@
 
       <input id="price" name="price" type="number" class="form-control" formControlName="price" placeholder="0" />
     </div>
-    <div *ngIf="price.invalid && price.touched">
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="price.invalid && price.touched"
+      class="alert alert-danger"
+      role="alert"
+    >
       Please enter an amount greater than zero.
     </div>
   </div>
@@ -25,7 +37,7 @@
       <option value="" disabled selected>Please select car type...</option>
       <option *ngFor="let c of categories$ | async" [value]="c.name">{{ c.name }}</option>
     </select>
-    <div *ngIf="category.invalid && category.touched">
+    <div class="alert alert-danger" role="alert" *ngIf="category.invalid && category.touched">
       Please enter your product's category.
     </div>
   </div>
@@ -33,10 +45,24 @@
     <label for="imageUrl">Image Url</label>
     <input id="imageUrl" name="imageUrl" type="text" class="form-control" formControlName="picture" />
   </div>
-  <div *ngIf="category.invalid && category.touched">
+  <div
+    class="alert alert-danger"
+    role="alert"
+    *ngIf="
+      newProductForm.controls['picture'].errors?.required &&
+      (newProductForm.controls['picture'].dirty || newProductForm.controls['picture'].touched)
+    "
+  >
     You should provide picture for your product.
+  </div>
+  <div
+    class="alert alert-danger"
+    role="alert"
+    *ngIf="newProductForm.controls['picture'].touched && newProductForm.controls['picture'].errors?.validUrl"
+  >
+    Please provide valid Url
   </div>
   <p>Form Status: {{ newProductForm.status }}</p>
   <button class="btn btn-success" type="submit" [disabled]="!newProductForm.valid">Save</button>
-  <button class="btn btn-primary ml-2" (click)="onReset()">Reset</button>
+  <button class="btn btn-light ml-2" (click)="onReset()">Reset</button>
 </form>
