@@ -31,7 +31,7 @@ export class ProductFormComponent implements OnInit {
       title: ['', [Validators.required, Validators.minLength(2)]],
       price: ['', [Validators.required, Validators.min(0.01)]],
       category: ['', Validators.required],
-      picture: ['', [Validators.required, ValidateUrl]],
+      imageUrl: ['', [Validators.required, ValidateUrl]],
     });
   }
 
@@ -45,6 +45,10 @@ export class ProductFormComponent implements OnInit {
 
   get category() {
     return this.newProductForm.get('category');
+  }
+
+  get imageUrl() {
+    return this.newProductForm.get('imageUrl');
   }
 
   onReset() {

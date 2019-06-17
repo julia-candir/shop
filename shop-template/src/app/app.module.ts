@@ -31,6 +31,7 @@ import { AuthService } from './shared/services/auth.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './shared/services/user.service';
+import { UploadComponent } from './shared/components/upload-component/upload-component.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { UserService } from './shared/services/user.service';
     ProductsComponent,
     ShoppingCartComponent,
     ProductFormComponent,
+    UploadComponent,
   ],
   imports: [
     BrowserModule,
