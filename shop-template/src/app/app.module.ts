@@ -29,9 +29,10 @@ import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestor
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AuthService } from './shared/services/auth.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserService } from './shared/services/user.service';
 import { UploadComponent } from './shared/components/upload-component/upload-component.component';
+import { ModalComponent } from './shared/components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { UploadComponent } from './shared/components/upload-component/upload-com
     ShoppingCartComponent,
     ProductFormComponent,
     UploadComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,7 @@ import { UploadComponent } from './shared/components/upload-component/upload-com
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     ReactiveFormsModule,
+    FormsModule,
     NgbModule.forRoot(),
     RouterModule.forRoot([
       {
