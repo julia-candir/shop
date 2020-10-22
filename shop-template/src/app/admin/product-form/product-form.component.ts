@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { ProductService } from '../../shared/services/product.service';
+import { ModalService } from '../../shared/services/modal.service';
 
 @Component({
   selector: 'app-product-form',
@@ -20,6 +21,7 @@ export class ProductFormComponent implements OnInit {
     private categoryService: CategoryService,
     private fb: FormBuilder,
     private productService: ProductService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -51,14 +53,22 @@ export class ProductFormComponent implements OnInit {
     return this.newProductForm.get('imageUrl');
   }
 
+  openModal(id: string) {
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
+  }
+
   onReset() {
     this.newProductForm.reset();
   }
 
-  save(product) {
-    console.log(this.newProductForm.value);
+  onSave(product) {
     this.productService.create(product);
-    console.log('product created');
+    console.log('product created', this.newProductForm.value);
+    this.modalService.open('productCreatedSuccessfullyModal');
     this.newProductForm.reset();
   }
 }

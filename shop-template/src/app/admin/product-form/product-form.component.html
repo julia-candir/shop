@@ -1,4 +1,4 @@
-<form [formGroup]="newProductForm" (ngSubmit)="save(newProductForm.value)">
+<form [formGroup]="newProductForm" (ngSubmit)="onSave(newProductForm.value)">
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
@@ -66,8 +66,8 @@
         Please provide valid Url
       </div>
       <p>Form Status: {{ newProductForm.status }}</p>
-      <button class="btn btn-success" type="submit" [disabled]="!newProductForm.valid">Save</button>
-      <button class="btn btn-light ml-2" (click)="onReset()">Reset</button>
+      <button type="submit" class="btn btn-success" [disabled]="!newProductForm.valid">Save</button>
+      <button type="button" class="btn btn-light ml-2" (click)="onReset()">Reset</button>
     </div>
     <div class="col-md-6">
       <h3>Product's Preview</h3>
@@ -84,3 +84,9 @@
     </div>
   </div>
 </form>
+
+<jw-modal id="productCreatedSuccessfullyModal">
+  <h1>Success!</h1>
+  <p>New product has been created!</p>
+  <button class="btn-outline" (click)="closeModal('productCreatedSuccessfullyModal')">Close</button>
+</jw-modal>

@@ -11,7 +11,7 @@ import { ModalService } from '../../services/modal.service';
     </div>
     <div class="jw-modal-background"></div>
   `,
-  styleUrls: ['modal.component.css'],
+  styleUrls: ['modal.component.scss'],
 })
 export class ModalComponent implements OnInit, OnDestroy {
   @Input() id: string;
