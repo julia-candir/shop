@@ -11,8 +11,8 @@
   <tbody>
     <tr *ngFor="let p of products$ | async">
       <td>{{ p.title }}</td>
-      <td>{{ p.title }}</td>
-      <td><a [routerLink]="['/admin/products/', p.key]">Edit</a></td>
+      <td>{{ p.price | currency }}</td>
+      <td><a [routerLink]="['/admin/products/', p.id]">Edit</a></td>
     </tr>
   </tbody>
 </table>

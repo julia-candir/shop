@@ -13,6 +13,6 @@ export class ProductService {
   }
 
   getAllProducts() {
-    return this.firestore.collection('products').snapshotChanges().pipe(map(data => data.map(item => item.payload.doc.data())));
+    return this.firestore.collection('products').snapshotChanges().pipe(map(data => data.map(item => { return { id: item.payload.doc.id, ...item.payload.doc.data() } })));
   }
 }
