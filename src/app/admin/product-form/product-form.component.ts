@@ -1,8 +1,9 @@
+import { ActivatedRoute } from '@angular/router';
 import { Category } from './../../shared/models/category';
 import { CategoryService } from './../../shared/services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { ProductService } from '../../shared/services/product.service';
 import { ModalService } from '../../shared/services/modal.service';
@@ -14,15 +15,22 @@ import { ModalService } from '../../shared/services/modal.service';
 })
 export class ProductFormComponent implements OnInit {
   categories$: Observable<Category[]>;
+  product = {};
 
   newProductForm: FormGroup;
 
   constructor(
     private categoryService: CategoryService,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private productService: ProductService,
-    private modalService: ModalService
-  ) {}
+    private modalService: ModalService,
+  ) {
+    let productId = this.route.snapshot.paramMap.get('id');
+    if (productId) {
+      this.productService.getProduct(productId).pipe(take(1)).subscribe(p => this.product = p.payload.data())
+    }
+  }
 
   ngOnInit() {
     this.categories$ = this.categoryService

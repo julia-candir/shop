@@ -96,12 +96,17 @@ import { ModalComponent } from './shared/components/modal/modal.component';
       {
         path: 'admin/admin-products',
         component: AdminProductsComponent,
-        canActivate: [AuthGuard, AdminAuthGuard],
+        // canActivate: [AuthGuard, AdminAuthGuard],
       },
       {
         path: 'admin/products/new',
         component: ProductFormComponent,
-        canActivate: [AuthGuard, AdminAuthGuard],
+        // canActivate: [AuthGuard, AdminAuthGuard],
+      },
+      {
+        path: 'admin/products/:id',
+        component: ProductFormComponent,
+        // canActivate: [AuthGuard, AdminAuthGuard],
       },
       {
         path: 'admin/admin-orders',
