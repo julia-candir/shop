@@ -16,6 +16,7 @@ import { ModalService } from '../../shared/services/modal.service';
 export class ProductFormComponent implements OnInit {
   categories$: Observable<Category[]>;
   product = {};
+  productId;
 
   newProductForm: FormGroup;
 
@@ -26,9 +27,9 @@ export class ProductFormComponent implements OnInit {
     private productService: ProductService,
     private modalService: ModalService,
   ) {
-    let productId = this.route.snapshot.paramMap.get('id');
-    if (productId) {
-      this.productService.getProduct(productId).pipe(take(1)).subscribe(p => this.product = p.payload.data())
+    this.productId = this.route.snapshot.paramMap.get('id');
+    if (this.productId) {
+      this.productService.getProduct(this.productId).pipe(take(1)).subscribe(p => this.product = p.payload.data())
     }
   }
 
@@ -74,9 +75,15 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSave(product) {
-    this.productService.create(product);
-    console.log('product created', this.newProductForm.value);
-    this.modalService.open('productCreatedSuccessfullyModal');
+    const onCreate = (product) => {
+      this.productService.create(product);
+      this.modalService.open('productCreatedSuccessfullyModal');
+    }
+    const onUpdate = (productId, product) => {
+      this.productService.update(productId, product)
+    }
+    
+    this.productId ? onUpdate(this.productId, product) : onCreate(product);
     this.newProductForm.reset();
   }
 }

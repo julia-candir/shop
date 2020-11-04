@@ -12,11 +12,15 @@ export class ProductService {
     this.firestore.collection('products').add(product);
   }
 
-  getAllProducts() {
-    return this.firestore.collection('products').snapshotChanges().pipe(map(data => data.map(item => { return { id: item.payload.doc.id, ...item.payload.doc.data() } })));
+  update(productId, product) {
+    return this.firestore.collection('products').doc(productId).update(product);
   }
 
   getProduct(productId) {
     return this.firestore.collection('products').doc(productId).snapshotChanges();
+  }
+
+  getAllProducts() {
+    return this.firestore.collection('products').snapshotChanges().pipe(map(data => data.map(item => { return { id: item.payload.doc.id, ...item.payload.doc.data() } })));
   }
 }
