@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from './../../shared/models/category';
 import { CategoryService } from './../../shared/services/category.service';
 import { Component, OnInit } from '@angular/core';
@@ -24,6 +24,7 @@ export class ProductFormComponent implements OnInit {
     private categoryService: CategoryService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private productService: ProductService,
     private modalService: ModalService,
   ) {
@@ -82,9 +83,16 @@ export class ProductFormComponent implements OnInit {
     const onUpdate = (productId, product) => {
       this.productService.update(productId, product)
     }
-    
+
     this.productId ? onUpdate(this.productId, product) : onCreate(product);
     this.newProductForm.reset();
+  }
+
+  onDelete() {
+    if (!confirm('Are you sure you want to delete this product?')) return; 
+
+    this.productService.delete(this.productId);
+    this.router.navigate(['admin/admin-products']);
   }
 }
 

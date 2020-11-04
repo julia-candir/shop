@@ -16,6 +16,10 @@ export class ProductService {
     return this.firestore.collection('products').doc(productId).update(product);
   }
 
+  delete(productId) {
+    return this.firestore.collection('products').doc(productId).delete();
+  }
+
   getProduct(productId) {
     return this.firestore.collection('products').doc(productId).snapshotChanges();
   }
