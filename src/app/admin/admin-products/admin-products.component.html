@@ -1,9 +1,9 @@
-<p><a routerLink="/admin/products/new" class="btn btn-primary">New Product</a></p>
+<p><a routerLink="/admin/products/new" class="btn btn-primary float-right mb-3">New Product</a></p>
 <p>
   <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
 </p>
 
-<table class="table">
+<table *ngIf="filteredProducts?.length > 0" datatable [dtOptions]="dtOptions" class="row-border hover">
   <thead>
     <tr>
       <th scope="col">Title</th>
