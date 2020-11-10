@@ -8,6 +8,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireModule } from '@angular/fire';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
+import { DataTablesModule } from 'angular-datatables';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -58,6 +59,7 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     AngularFireDatabaseModule,
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    DataTablesModule,
     ReactiveFormsModule,
     FormsModule,
     NgbModule.forRoot(),
