@@ -50,7 +50,7 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     ShoppingCartComponent,
     ProductFormComponent,
     UploadComponent,
-    ModalComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
