@@ -66,7 +66,7 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     RouterModule.forRoot([
       {
         path: '',
-        component: HomeComponent,
+        component: ProductsComponent,
       },
       {
         path: 'products',
