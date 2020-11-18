@@ -36,10 +36,10 @@
       <div class="form-group">
         <label for="category">Category</label>
         <select id="category" name="category" class="form-control" formControlName="category" required [(ngModel)]="product.category">
-          <option value="" disabled selected>Please select car type...</option>
-          <option *ngFor="let c of categories$ | async" [value]="c.name">{{ c.name }}</option>
+          <option value="" disabled>Please select car type...</option>
+          <option *ngFor="let c of categories$ | async" [ngValue]="c">{{ c.name }}</option>
         </select>
-        {{ category.value }}
+        {{product.category.name}}
         <div class="alert alert-danger" role="alert" *ngIf="category.invalid && category.touched">
           Please enter your product's category.
         </div>
@@ -65,7 +65,7 @@
       >
         Please provide valid Url
       </div>
-      <p>Form Status: {{ newProductForm.status }}</p>
+      <pre>Form Status: {{ newProductForm.value | json }}</pre>
       <button type="submit" class="btn btn-success" [disabled]="!newProductForm.valid">Save</button>
       <button type="button" class="btn btn-light ml-2" (click)="onReset()">Reset</button>
       <button type="button" class="btn btn-danger ml-2" (click)="onDelete()" [disabled]="!productId">Delete</button>

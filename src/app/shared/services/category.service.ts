@@ -9,10 +9,10 @@ export class CategoryService {
   constructor(private firestore: AngularFirestore) {}
   public categories$: Observable<{}>;
 
-  getCategories() {
+  getAllCategories() {
     return this.firestore.collection('categories').snapshotChanges();
   }
-  // getCategories() {
+  // getAllCategories() {
   //   return (this.categories$ = this.db.list('/categories', ref => ref.orderByChild('name')));
   // }
 }

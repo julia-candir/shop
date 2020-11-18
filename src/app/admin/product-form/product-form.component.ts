@@ -36,15 +36,20 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
     this.categories$ = this.categoryService
-      .getCategories()
+      .getAllCategories()
       .pipe(map(data => data.map(item => item.payload.doc.data() as Category)));
 
     this.newProductForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
       price: ['', [Validators.required, Validators.min(0.01)]],
-      category: ['', Validators.required],
+      category: [{
+        name: '',
+        shortcode: ''
+      }, Validators.required],
       imageUrl: ['', [Validators.required, ValidateUrl]],
     });
+
+    console.warn(this.newProductForm.value);
   }
 
   get title() {
