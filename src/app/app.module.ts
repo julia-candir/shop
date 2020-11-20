@@ -41,6 +41,7 @@ import { AuthService } from './shared/services/auth.service';
 import { UserService } from './shared/services/user.service';
 import { ProductService } from './shared/services/product.service';
 import { CategoryService } from './shared/services/category.service';
+import { ShoppingCartService } from './shared/services/shopping-cart.service';
 
 @NgModule({
   declarations: [
@@ -127,7 +128,7 @@ import { CategoryService } from './shared/services/category.service';
       { path: '**', component: NotFoundComponent },
     ]),
   ],
-  providers: [AuthService, AuthGuard, UserService, AdminAuthGuard, AngularFirestore, CategoryService, ProductService],
+  providers: [AuthService, AuthGuard, UserService, AdminAuthGuard, AngularFirestore, CategoryService, ProductService, ShoppingCartService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
