@@ -8,10 +8,10 @@ import { AppUser } from '../models/app-user';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private db: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore) {}
 
   save(user: firebase.User) {
-    this.db
+    this.firestore
       .doc('/users/' + user.uid)
       .set(
         {
@@ -25,6 +25,6 @@ export class UserService {
   }
 
   get(uid: string): Observable<AppUser> {
-    return this.db.doc('/users/' + uid).valueChanges() as Observable<AppUser>;
+    return this.firestore.doc('/users/' + uid).valueChanges() as Observable<AppUser>;
   }
 }
