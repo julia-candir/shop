@@ -12,7 +12,4 @@ export class CategoryService {
   getAllCategories() {
     return this.firestore.collection('categories').snapshotChanges();
   }
-  // getAllCategories() {
-  //   return (this.categories$ = this.db.list('/categories', ref => ref.orderByChild('name')));
-  // }
 }
