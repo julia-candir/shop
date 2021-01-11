@@ -1,7 +1,9 @@
+import { Cart } from './../models/cart';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, QuerySnapshot } from '@angular/fire/firestore';
 import { Product } from '../models/product';
-import { take } from 'rxjs/operators';
+import { take, map, tap, switchMap, withLatestFrom } from 'rxjs/operators';
+import { from, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,34 +12,48 @@ export class ShoppingCartService {
   constructor(private firestore: AngularFirestore) { }
 
   private create() {
-    return this.firestore.collection('shopping-carts').add({
+    return from(this.firestore.collection('shopping-carts').add({
       dateCreated: new Date().getTime()
-    });
+    }));
   }
 
-  private getCart(cartId: string) {
-    return this.firestore.collection('shopping-carts').doc(cartId).snapshotChanges();
+  getCart() {
+    return this.getOrCreateCartId().pipe(
+      switchMap(cartId => this.firestore.collection('shopping-carts').doc(cartId).collection('items').get()),
+      map((snapshot: QuerySnapshot<Cart[]>) => {
+        const products: Cart[] = [];
+        snapshot.forEach((query) => products.push(query.data() as Cart))
+        return products;
+      })
+    )
   }
 
-  private async getOrCreateCartId() {
+  private getOrCreateCartId() {
     let cartId = localStorage.getItem('cartId');
-    if (cartId) return cartId;
+    if (cartId) return of(cartId);
 
-    let result = await this.create();
-    localStorage.setItem('cartId', result.id);
-    return result.id;
+    return this.create().pipe(
+      tap((result) => localStorage.setItem('cartId', result.id)),
+      map(result => result.id)
+    )
   }
 
-  async addToCart(product: Product) {
-    let cartId = await this.getOrCreateCartId();
-    let item$ = this.firestore.collection('shopping-carts').doc(cartId + '/items/' + product.id);
+  addToCart(product: Product) {
+    this.getOrCreateCartId().pipe(
+      take(1),
+      switchMap(cartId => {
+        const collection = this.firestore.collection('shopping-carts').doc(cartId + '/items/' + product.id);
+        return collection.snapshotChanges().pipe(
+          withLatestFrom(of(collection))
+        )
+      })
+    ).subscribe(([items, collection]) => {
+      const itemPayload = items.payload.data() as any;
+      console.warn('itemPayload', itemPayload)
 
-    item$.snapshotChanges().pipe(take(1)).subscribe((item: any) => {
-      const itemPayload = item.payload.data();
-
-      if (item.payload.exists) item$.update({ quantity: itemPayload.quantity + 1 });
-      else item$.set({ product: product, quantity: 1 })
-    })
+      if (items.payload.exists) collection.update({ quantity: itemPayload.quantity + 1 });
+      else collection.set({ product: product, quantity: 1 })
+    });
 
   }
 }

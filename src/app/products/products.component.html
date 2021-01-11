@@ -5,8 +5,8 @@
   <div class="col-9">
     <div class="row">
       <ng-container *ngFor="let p of filteredProducts; let i = index">
-        <div class="col">
-          <product-card [product]="p"></product-card>
+        <div class="col px-1">
+          <product-card [product]="p" [shopping-cart]="cart"></product-card>
         </div>
       </ng-container>
     </div>
