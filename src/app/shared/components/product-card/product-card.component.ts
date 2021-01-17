@@ -19,11 +19,9 @@ export class ProductCardComponent {
   }
 
   getQuantity() {
-    // if (!this.shoppingCart) return 0;
-    console.warn("this.shoppingCart", this.shoppingCart);
-
-    // let item = this.shoppingCart.items[this.product.id];
-    // console.warn("dlmgldfmgm", item);
-    // return item ? item.quantity : 0;
+    if (!this.shoppingCart) return 0;
+    
+    const item = this.shoppingCart.find(cartProduct => cartProduct.product.id === this.product.id);
+    return item ? item.quantity : 0;
   }
 }

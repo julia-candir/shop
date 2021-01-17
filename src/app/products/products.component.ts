@@ -16,8 +16,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   category: string;
-  cart: any;
-  subscription: Subscription;
+  cart: Cart[];
+  private subscriptions: Subscription;
   private destroy$ = new Subject()
 
   constructor(
@@ -25,6 +25,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     route: ActivatedRoute,
     private shoppingCartService: ShoppingCartService
   ) {
+    this.subscriptions = new Subscription();
     productService.getAllProducts().pipe(switchMap((products: Product[]) => {
       this.products = products;
       return route.queryParamMap;
@@ -37,15 +38,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const sub = this.shoppingCartService.getCart().subscribe((products: Cart[]) => {
-      console.log(products);
-      
+    const sub = this.shoppingCartService.getCart().subscribe((cart: Cart[]) => {
+      this.cart = cart;
     });
-    this.subscription.add(sub)
+    this.subscriptions.add(sub);
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
     this.destroy$.next();
     this.destroy$.complete();
   }

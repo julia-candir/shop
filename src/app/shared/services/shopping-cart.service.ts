@@ -1,7 +1,7 @@
+import { Product } from './../models/product';
 import { Cart } from './../models/cart';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QuerySnapshot } from '@angular/fire/firestore';
-import { Product } from '../models/product';
 import { take, map, tap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { from, of } from 'rxjs';
 
@@ -39,21 +39,15 @@ export class ShoppingCartService {
   }
 
   addToCart(product: Product) {
-    this.getOrCreateCartId().pipe(
-      take(1),
-      switchMap(cartId => {
-        const collection = this.firestore.collection('shopping-carts').doc(cartId + '/items/' + product.id);
-        return collection.snapshotChanges().pipe(
-          withLatestFrom(of(collection))
-        )
-      })
-    ).subscribe(([items, collection]) => {
-      const itemPayload = items.payload.data() as any;
-      console.warn('itemPayload', itemPayload)
+    let cartId;
+    this.getOrCreateCartId().subscribe(event => cartId = event);
+    let item$ = this.firestore.collection('shopping-carts').doc(cartId + '/items/' + product.id);
 
-      if (items.payload.exists) collection.update({ quantity: itemPayload.quantity + 1 });
-      else collection.set({ product: product, quantity: 1 })
-    });
+    item$.snapshotChanges().pipe(take(1)).subscribe((item: any) => {
+      const itemPayload = item.payload.data();
 
+      if (item.payload.exists) item$.update({ quantity: itemPayload.quantity + 1 });
+      else item$.set({ product: product, quantity: 1 })
+    })
   }
 }
